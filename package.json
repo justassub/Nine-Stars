@@ -1,0 +1,21 @@
+{
+  "name": "training",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "array-reduce-sum": "^1.0.0",
+    "axios": "^0.17.1",
+    "boostrap": "^2.0.0",
+    "bootstrap": "^3.3.7",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "react-scripts": "1.0.17",
+    "reducer": "^0.19.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
