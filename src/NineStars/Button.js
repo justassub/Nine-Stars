@@ -4,13 +4,8 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 export var Button =(props)=>{
-    let button;
     
-   
-      
-
- 
-
+    let button;
     switch(props.answerIsCorrect){
         case true:
         button=
@@ -46,6 +41,13 @@ export var Button =(props)=>{
     return (
         <div className="col-xs-5 col-sm-1 " >
             {button}
+            <button 
+             disabled={props.repeats===0}
+            onClick={props.redraw}
+            
+            className ='glyphicon glyphicon-refresh'
+            
+            >{props.repeats}</button>
            
         </div>
     )
