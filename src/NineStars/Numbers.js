@@ -5,6 +5,7 @@ export const Numbers =(props)=>{
    const arrayOfNumbers=10;
    let numbers=[];
    let vertes=props.selectedNumbers
+   let usedNumbers=props.usedNumbers;
 
 
 
@@ -14,6 +15,9 @@ export const Numbers =(props)=>{
             numbers.push(<span key={i} 
                 onClick={()=>props.removeNumber(i)}
                     className="selected" >{i}</span>);
+        }else if (usedNumbers.includes(i)){
+            numbers.push(<span key={i}                
+            className="used" >{i}</span>);
         }
         else{
             numbers.push(<span key={i}
@@ -21,6 +25,7 @@ export const Numbers =(props)=>{
         }
 
    }
+   
 
    
     return (

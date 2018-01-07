@@ -6,21 +6,24 @@ import {Answer} from './Answer';
 import {Numbers} from './Numbers';
 
 
-var numberOfStars1=Math.random()*9+1;
+var numberOfStars=1+Math.floor(Math.random()*9);
 var fn=require('array-reduce-sum');
 export class Connector extends React.Component{
      
      
     state={
-        numberOfStars:numberOfStars1,
-        selectedNumbers:[],      
+        numberOfStars:numberOfStars,
+        selectedNumbers:[],    
+        answerIsCorrect :null,
+        usedNumbers:[]
         
     }
     
     selectNumber=(clickedNumber)=>{
         
-        this.setState(prevState=>(            
-            {selectedNumbers:prevState.selectedNumbers.concat(clickedNumber)}
+        this.setState(prevState=>( {
+                answerIsCorrect:null,
+                selectedNumbers:prevState.selectedNumbers.concat(clickedNumber)}
             
         ));
         
@@ -31,12 +34,35 @@ export class Connector extends React.Component{
         var index=array.indexOf(clickedNumber);
         delete array[index];
         this.setState(prevState=>(
-            {selectedNumbers:array}
+            {
+                answerIsCorrect:null,
+                selectedNumbers:array}
         ))
+    }
+    
+
+    checkAnswer =()=>{
+        
+      this.setState(prevState=>(
+          {answerIsCorrect:prevState.numberOfStars===
+            prevState.selectedNumbers.reduce((acc,n)=>acc+n,0)}));      
+       
+    };
+
+    acceptAnswer=()=>{
+        this.setState(prevState=>({
+            usedNumbers:prevState.usedNumbers.concat(prevState.selectedNumbers),
+            selectedNumbers:[],
+            answerIsCorrect:null,
+            numberOfStars:1+Math.floor(Math.random()*9)
+        }))
     }
 
     render(){
-        const {selectedNumbers,numberOfStars,sum}=this.state;
+        const {selectedNumbers,numberOfStars,answerIsCorrect,usedNumbers}=this.state;
+        const suma = selectedNumbers.reduce((acc,n)=>acc+n,0)
+
+        
         return(
             <div className="container"> 
                 <h3>Play Nine</h3>
@@ -44,15 +70,21 @@ export class Connector extends React.Component{
               
                 <div className="row">
                 <Stars numberOfStars={Math.round(numberOfStars)}/>
-                <Button  selectedNumbers={selectedNumbers}
+                <Button 
+                acceptAnswer={this.acceptAnswer}                
+                checkAnswer={this.checkAnswer} 
+                answerIsCorrect={answerIsCorrect}
+                selectedNumbers={selectedNumbers}
                 numberOfStars={Math.round(numberOfStars)} />
                 <Answer removeNumber={this.removeNumber} 
                 selectedNumbers={this.state.selectedNumbers}
                />
                 </div>
                 <br />
-                <Numbers  removeNumber={this.removeNumber} selectNumber={this.selectNumber} selectedNumbers={this.state.selectedNumbers}/>
-                <h1>{this.state.selectedNumbers}suma</h1>
+                <Numbers 
+                usedNumbers={usedNumbers}
+                 removeNumber={this.removeNumber} selectNumber={this.selectNumber} selectedNumbers={this.state.selectedNumbers}/>
+             
 
             </div>
         )

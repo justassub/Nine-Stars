@@ -4,38 +4,48 @@ import '../../node_modules/bootstrap/dist/css/bootstrap.min.css';
 
 
 export var Button =(props)=>{
+    let button;
     
-    var skaiciai=props.selectedNumbers
-    var stars=props.numberOfStars
+   
       
 
-    var calculateSum=()=>{
-        let suma=0;
-        for (let i=0;i<skaiciai.length;i++){
-            suma=suma+skaiciai[i]           
-        }
-        
-        if (stars==suma){
-           alert ("YOU WON")
-        }else {
-            alert("you suck")
-            console.log(suma,stars)
-        }
+ 
+
+    switch(props.answerIsCorrect){
+        case true:
+        button=
+        <button       
+        onClick={props.acceptAnswer}        
+        className="btn btn-success">
+        <i className="fa fa-check"></i></button>
+        break;
+        console.log(props.answerIsCorrect)
+        case false:
+       button=
+       <button 
+       className="btn btn-danger"
+       onClick={props.checkAnswer}>
        
-    }  
+       <i className="fa fa-times"></i>
+       </button>
+        console.log(props.answerIsCorrect)
+        break;
+        default:
+        button=
+        <button 
+        disabled={props.selectedNumbers.length===0}
+        onClick={props.checkAnswer}
         
-    
-        
-    
+        className="glyphicon glyphicon-ok">
+
+        </button>
+        console.log("suma",props.suma,"stars",props.numberOfStars,props.answerIsCorrect,"ar teisinga")
+    }
 
 
     return (
         <div className="col-xs-5 col-sm-1 " >
-            <button 
-            disabled={props.selectedNumbers.length===0}
-            onClick={calculateSum}
-            
-            className="glyphicon glyphicon-ok"></button>
+            {button}
            
         </div>
     )
